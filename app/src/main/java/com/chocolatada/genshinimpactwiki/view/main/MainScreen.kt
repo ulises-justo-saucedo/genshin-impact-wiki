@@ -27,10 +27,18 @@ import com.chocolatada.genshinimpactwiki.view.GenshinImpactFont
 import com.chocolatada.genshinimpactwiki.view.White
 import com.chocolatada.genshinimpactwiki.view.bottombar.BottomBar
 import com.chocolatada.genshinimpactwiki.view.searchbar.SearchBar
+import com.chocolatada.genshinimpactwiki.viewmodel.MainViewModel
 
 @Composable
 @Preview(showBackground = true)
-fun MainScreen() {
+fun MainScreenPreview() {
+    MainScreen(mainViewModel = MainViewModel())
+}
+
+@Composable
+fun MainScreen(
+    mainViewModel: MainViewModel
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -79,8 +87,8 @@ fun MainScreen() {
                 .fillMaxWidth()
                 .height(150.dp)
         ) {
-            items(10) { iterator ->
-                MyCard()
+            items(mainViewModel.keysList.size) { iterator ->
+                MyCard(mainViewModel.keysList[iterator])
             }
         }
 
@@ -93,7 +101,7 @@ fun MainScreen() {
 }
 
 @Composable
-fun MyCard() {
+fun MyCard(title: String) {
     Card(
         onClick = { /*TODO*/ },
         modifier = Modifier
@@ -102,6 +110,6 @@ fun MyCard() {
             .padding(bottom = 15.dp),
         colors = CardColors(BlueDT, White, BlueDT, White)
     ) {
-        Text(text = "Random text so I can test this", color = White, fontFamily = GenshinImpactFont)
+        Text(text = title.uppercase(), color = White, fontFamily = GenshinImpactFont)
     }
 }
