@@ -4,6 +4,10 @@ plugins {
 
     kotlin("plugin.serialization") version "2.0.21"
     alias(libs.plugins.compose.compiler)
+
+    //dagger hilt plugins
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -52,7 +56,16 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
+    //dependencies for dagger hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
 
