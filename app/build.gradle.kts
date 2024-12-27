@@ -61,6 +61,13 @@ kapt {
 }
 
 dependencies {
+    //dependencies for ktor o_o
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.core)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+
     //dependencies for dagger hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
