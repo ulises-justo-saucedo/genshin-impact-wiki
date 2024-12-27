@@ -4,6 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.chocolatada.genshinimpactwiki.navigation.Navigation
 
 class MainActivity : ComponentActivity() {
@@ -11,7 +17,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Navigation()
+            Box(modifier = Modifier.safeDrawingPadding()){
+                Navigation()
+            }
         }
     }
 }
