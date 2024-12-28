@@ -16,6 +16,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,61 +28,29 @@ import com.chocolatada.genshinimpactwiki.view.BlueDT
 import com.chocolatada.genshinimpactwiki.view.GenshinImpactFont
 import com.chocolatada.genshinimpactwiki.view.White
 import com.chocolatada.genshinimpactwiki.view.bottombar.BottomBar
+import com.chocolatada.genshinimpactwiki.view.container.AppContainer
 import com.chocolatada.genshinimpactwiki.view.searchbar.SearchBar
 import com.chocolatada.genshinimpactwiki.viewmodel.MainViewModel
 
 @Composable
 @Preview(showBackground = true)
 fun MainScreenPreview() {
-    MainScreen(mainViewModel = MainViewModel())
+    MainScreen(mainViewModel = MainViewModel(), {}, {}, {})
 }
 
 @Composable
 fun MainScreen(
-    mainViewModel: MainViewModel
+    mainViewModel: MainViewModel,
+    onExplore: () -> Unit,
+    onSaved: () -> Unit,
+    onDone: (String) -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Black),
-        verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.CenterHorizontally
+    AppContainer(
+        onExplore = { onExplore() },
+        onSaved = { onSaved() },
+        onDone = { inputText -> onDone(inputText) },
+        headerContent = { HeaderContent() }
     ) {
-        Column(
-            modifier = Modifier.padding(start = 15.dp, top = 15.dp, end = 15.dp)
-        ) {
-            Text(
-                text = "Genshin Impact Wiki",
-                color = White,
-                fontFamily = GenshinImpactFont,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(bottom = 10.dp)
-            )
-            SearchBar(
-                modifier = Modifier.fillMaxWidth(),
-                onDone = { inputText ->
-                    // Handle search input here
-                }
-            )
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    modifier = Modifier
-                        .size(200.dp),
-                    painter = painterResource(id = R.drawable.paimon_mainscreen),
-                    contentDescription = "Image"
-                )
-                Text(
-                    text = "Feel free to search whatever!",
-                    color = White,
-                    fontSize = 20.sp,
-                    fontFamily = GenshinImpactFont
-                )
-            }
-        }
-
         LazyColumn(
             modifier = Modifier
                 .padding(start = 15.dp, end = 15.dp)
@@ -91,17 +61,32 @@ fun MainScreen(
                 MyCard(mainViewModel.keysList[iterator])
             }
         }
+    }
+}
 
-        BottomBar(
-            onExplore = { /*TODO*/ },
-            onSearch = { /*TODO*/ },
-            onSaved = { /*TODO*/ }
+@Composable
+fun HeaderContent() {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            modifier = Modifier
+                .size(200.dp),
+            painter = painterResource(id = R.drawable.paimon_mainscreen),
+            contentDescription = "Image"
+        )
+        Text(
+            text = "Feel free to search whatever!",
+            color = White,
+            fontSize = 20.sp,
+            fontFamily = GenshinImpactFont
         )
     }
 }
 
 @Composable
-fun MyCard(title: String) {
+fun MyCard(key: String) {
     Card(
         onClick = { /*TODO*/ },
         modifier = Modifier
@@ -110,6 +95,6 @@ fun MyCard(title: String) {
             .padding(bottom = 15.dp),
         colors = CardColors(BlueDT, White, BlueDT, White)
     ) {
-        Text(text = title.uppercase(), color = White, fontFamily = GenshinImpactFont)
+        Text(text = key, color = White, fontFamily = GenshinImpactFont)
     }
 }
