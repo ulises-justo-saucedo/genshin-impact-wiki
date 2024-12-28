@@ -14,33 +14,30 @@ import com.chocolatada.genshinimpactwiki.viewmodel.MainViewModel
 fun Navigation() {
     val navController = rememberNavController()
     NavHost(
-        navController = navController,
-        startDestination = Main
+        navController = navController, startDestination = Main
     ) {
         composable<Main> {
             val mainViewModel: MainViewModel = hiltViewModel()
             MainScreen(
                 mainViewModel = mainViewModel,
-                onExplore = { /* onExplore is MainScreen; we are already there so no need to do anything d: */ },
-                onSaved = { /* todo: navigate to SavedScreen */ },
-                onDone = { inputText -> navController.navigate(Search(inputText)) }
-            )
+                onExplore = {
+                navController.navigate(Main) {
+                    popUpTo(Main) {
+                        inclusive = true
+                    }
+                }
+            },
+            onSaved = { /* todo: navigate to SavedScreen */ })
         }
         composable<Search> { backStackEntry ->
             val search: Search = backStackEntry.toRoute()
-            SearchScreen(
-                inputText = search.inputText,
-                onExplore = {
-                    navController.navigate(Main) {
-                        popUpTo(Main) {
-                            inclusive = true
-                        }
+            SearchScreen(inputText = search.inputText, onExplore = {
+                navController.navigate(Main) {
+                    popUpTo(Main) {
+                        inclusive = true
                     }
-                },
-                onSaved = { /* todo: navigate to SavedScreen */ },
-                onDone = { newInputText -> navController.navigate(Search(newInputText)) },
-                onArrowBack = { navController.popBackStack() }
-            )
+                }
+            }, onSaved = { /* todo: navigate to SavedScreen */ })
         }
     }
 }

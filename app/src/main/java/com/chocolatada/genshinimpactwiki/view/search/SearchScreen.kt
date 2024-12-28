@@ -9,16 +9,11 @@ import com.chocolatada.genshinimpactwiki.view.container.AppContainer
 fun SearchScreen(
     inputText: String,
     onExplore: () -> Unit,
-    onSaved: () -> Unit,
-    onDone: (String) -> Unit,
-    onArrowBack: () -> Unit
+    onSaved: () -> Unit
 ) {
     AppContainer(
         onExplore = { onExplore() },
-        onSaved = { onSaved() },
-        onDone = { newInputText -> onDone(newInputText) },
-        searchBarWithButtons = true,
-        onArrowBack = { onArrowBack() }
+        onSaved = { onSaved() }
     ) {
         // todo: draw in screen every single register from the api that the user searched for
         Text(text = inputText, color = White)

@@ -23,7 +23,6 @@ import com.chocolatada.genshinimpactwiki.view.White
 @Composable
 fun BottomBar(
     onExplore: () -> Unit,
-    onSearch: () -> Unit,
     onSaved: () -> Unit
 ) {
     Row(
@@ -37,11 +36,6 @@ fun BottomBar(
             icon = R.drawable.explore,
             description = "Explore",
             onClick = onExplore
-        )
-        Icon(
-            icon = R.drawable.search,
-            description = "Search",
-            onClick = onSearch
         )
         Icon(
             icon = R.drawable.saved,
