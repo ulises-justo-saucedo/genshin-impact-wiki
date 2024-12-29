@@ -28,6 +28,7 @@ import com.chocolatada.genshinimpactwiki.domain.dto.FieldMainScreenDTO
 import com.chocolatada.genshinimpactwiki.view.BlueDT
 import com.chocolatada.genshinimpactwiki.view.GenshinImpactFont
 import com.chocolatada.genshinimpactwiki.view.White
+import com.chocolatada.genshinimpactwiki.view.composables.MyCard
 import com.chocolatada.genshinimpactwiki.view.container.AppContainer
 import com.chocolatada.genshinimpactwiki.viewmodel.MainViewModel
 
@@ -58,9 +59,12 @@ fun MainScreen(
                 .verticalScroll(scrollState)
         ) {
             for(i in 0..<mainViewModel.keysList.size) {
+                val currentObject = mainViewModel.keysList[i]
                 MyCard(
-                    fieldMainScreenDTO = mainViewModel.keysList[i],
-                    onSearch = onSearch
+                    icon = currentObject.icon,
+                    text = currentObject.key.replaceFirstChar { it.uppercase() },
+                    lambdaParameter = currentObject.key,
+                    onClick = { onSearch(currentObject.key) }
                 )
             }
         }
@@ -85,39 +89,5 @@ fun HeaderContent() {
             fontSize = 20.sp,
             fontFamily = GenshinImpactFont
         )
-    }
-}
-
-@Composable
-fun MyCard(
-    fieldMainScreenDTO: FieldMainScreenDTO,
-    onSearch: (String) -> Unit
-) {
-    Card(
-        onClick = { onSearch(fieldMainScreenDTO.key) },
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp)
-            .padding(bottom = 15.dp),
-        colors = CardColors(BlueDT, White, BlueDT, White)
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Image(
-                painter = painterResource(id = fieldMainScreenDTO.icon),
-                contentDescription = "Artifact Icon",
-                modifier = Modifier.size(90.dp)
-            )
-            Text(
-                text = fieldMainScreenDTO.key.replaceFirstChar { it.uppercase() },
-                color = White,
-                fontFamily = GenshinImpactFont,
-                modifier = Modifier.padding(end = 60.dp),
-                fontSize = 20.sp
-            )
-        }
     }
 }
