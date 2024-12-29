@@ -6,4 +6,4 @@ import kotlinx.serialization.Serializable
 object Main
 
 @Serializable
-data class Search(val inputText: String)
+data class Search(val key: String)

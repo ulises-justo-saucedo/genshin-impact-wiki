@@ -34,7 +34,7 @@ import com.chocolatada.genshinimpactwiki.viewmodel.MainViewModel
 @Composable
 @Preview(showBackground = true)
 fun MainScreenPreview() {
-    MainScreen(mainViewModel = MainViewModel(), {}, {})
+    MainScreen(mainViewModel = MainViewModel(), {}, {}, {})
 }
 
 @Composable
@@ -42,6 +42,7 @@ fun MainScreen(
     mainViewModel: MainViewModel,
     onExplore: () -> Unit,
     onSaved: () -> Unit,
+    onSearch: (String) -> Unit
 ) {
     val scrollState = rememberScrollState()
     AppContainer(
@@ -57,7 +58,10 @@ fun MainScreen(
                 .verticalScroll(scrollState)
         ) {
             for(i in 0..<mainViewModel.keysList.size) {
-                MyCard(mainViewModel.keysList[i])
+                MyCard(
+                    fieldMainScreenDTO = mainViewModel.keysList[i],
+                    onSearch = onSearch
+                )
             }
         }
     }
@@ -85,9 +89,12 @@ fun HeaderContent() {
 }
 
 @Composable
-fun MyCard(fieldMainScreenDTO: FieldMainScreenDTO) {
+fun MyCard(
+    fieldMainScreenDTO: FieldMainScreenDTO,
+    onSearch: (String) -> Unit
+) {
     Card(
-        onClick = { /*TODO*/ },
+        onClick = { onSearch(fieldMainScreenDTO.key) },
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)

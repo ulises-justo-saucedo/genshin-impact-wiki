@@ -9,6 +9,7 @@ import androidx.navigation.toRoute
 import com.chocolatada.genshinimpactwiki.view.main.MainScreen
 import com.chocolatada.genshinimpactwiki.view.search.SearchScreen
 import com.chocolatada.genshinimpactwiki.viewmodel.MainViewModel
+import com.chocolatada.genshinimpactwiki.viewmodel.SearchScreenViewModel
 
 @Composable
 fun Navigation() {
@@ -21,23 +22,31 @@ fun Navigation() {
             MainScreen(
                 mainViewModel = mainViewModel,
                 onExplore = {
-                navController.navigate(Main) {
-                    popUpTo(Main) {
-                        inclusive = true
+                    navController.navigate(Main) {
+                        popUpTo(Main) {
+                            inclusive = true
+                        }
                     }
-                }
-            },
-            onSaved = { /* todo: navigate to SavedScreen */ })
+                },
+                onSaved = { /* todo: navigate to SavedScreen */ },
+                onSearch = { key -> navController.navigate(Search(key)) }
+            )
         }
         composable<Search> { backStackEntry ->
             val search: Search = backStackEntry.toRoute()
-            SearchScreen(inputText = search.inputText, onExplore = {
-                navController.navigate(Main) {
-                    popUpTo(Main) {
-                        inclusive = true
+            val searchScreenViewModel: SearchScreenViewModel = hiltViewModel()
+            SearchScreen(
+                onExplore = {
+                    navController.navigate(Main) {
+                        popUpTo(Main) {
+                            inclusive = true
+                        }
                     }
-                }
-            }, onSaved = { /* todo: navigate to SavedScreen */ })
+                },
+                onSaved = { /* todo: navigate to SavedScreen */ },
+                searchScreenViewModel = searchScreenViewModel,
+                key = search.key
+            )
         }
     }
 }
