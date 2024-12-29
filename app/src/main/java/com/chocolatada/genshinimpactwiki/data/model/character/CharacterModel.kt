@@ -3,8 +3,10 @@ package com.chocolatada.genshinimpactwiki.data.model.character
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Character(
-    val name: String,
+data class CharacterModel(
+    var name: String,
     val title: String? = null,
-    val vision: String
+    val vision: String,
+    val id: String,
+    val urlIcon: String? = null
 )
