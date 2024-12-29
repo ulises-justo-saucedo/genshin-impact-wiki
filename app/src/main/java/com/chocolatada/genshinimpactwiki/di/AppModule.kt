@@ -1,5 +1,8 @@
 package com.chocolatada.genshinimpactwiki.di
 
+import com.chocolatada.genshinimpactwiki.data.dao.CharacterDao
+import com.chocolatada.genshinimpactwiki.data.repository.character.CharacterRepositoryImpl
+import com.chocolatada.genshinimpactwiki.data.repository.character.ICharacterRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,13 +18,23 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideHttpClient(): HttpClient {
-        return HttpClient {
-            install(ContentNegotiation) {
-                json(Json {
-                    ignoreUnknownKeys = true
-                })
-            }
+    fun provideHttpClient(): HttpClient = HttpClient {
+        install(ContentNegotiation) {
+            json(Json {
+                ignoreUnknownKeys = true
+            })
         }
     }
+
+    @Provides
+    @Singleton
+    fun provideCharacterRepository(
+        characterApiDao: CharacterDao
+    ): ICharacterRepository = CharacterRepositoryImpl(characterApiDao)
+
+    @Provides
+    @Singleton
+    fun provideCharacterDao(httpClient: HttpClient): CharacterDao = CharacterDao(httpClient)
+
+
 }
