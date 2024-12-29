@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Character(
     val name: String,
-    val title: String,
+    val title: String? = null,
     val vision: String
 )
