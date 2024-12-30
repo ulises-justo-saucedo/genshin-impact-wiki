@@ -6,4 +6,7 @@ import kotlinx.serialization.Serializable
 object Main
 
 @Serializable
-data class Search(val key: String)
+object SearchCharacter
+
+@Serializable
+object SearchArtifacts
