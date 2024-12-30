@@ -1,15 +1,20 @@
 package com.chocolatada.genshinimpactwiki.navigation
 
+import android.widget.Toast
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
+import com.chocolatada.genshinimpactwiki.data.api.keys.EntryKeys
 import com.chocolatada.genshinimpactwiki.view.main.MainScreen
-import com.chocolatada.genshinimpactwiki.view.search.SearchScreen
+import com.chocolatada.genshinimpactwiki.view.search.SearchArtifactScreen
+import com.chocolatada.genshinimpactwiki.view.search.SearchCharacterScreen
 import com.chocolatada.genshinimpactwiki.viewmodel.MainViewModel
-import com.chocolatada.genshinimpactwiki.viewmodel.SearchScreenViewModel
+import com.chocolatada.genshinimpactwiki.viewmodel.SearchArtifactScreenViewModel
+import com.chocolatada.genshinimpactwiki.viewmodel.SearchCharacterScreenViewModel
 
 @Composable
 fun Navigation() {
@@ -19,34 +24,43 @@ fun Navigation() {
     ) {
         composable<Main> {
             val mainViewModel: MainViewModel = hiltViewModel()
+            val context = LocalContext.current
             MainScreen(
                 mainViewModel = mainViewModel,
-                onExplore = {
-                    navController.navigate(Main) {
-                        popUpTo(Main) {
-                            inclusive = true
-                        }
-                    }
-                },
+                onExplore = { navigateToMain(navController) },
                 onSaved = { /* todo: navigate to SavedScreen */ },
-                onSearch = { key -> navController.navigate(Search(key)) }
+                onSearch = { key ->
+                    when(key) {
+                        EntryKeys.CHARACTERS -> navController.navigate(SearchCharacter)
+                        EntryKeys.ARTIFACTS -> navController.navigate(SearchArtifacts)
+                        else -> Toast.makeText(context, "Coming soon ! ! !", Toast.LENGTH_LONG).show()
+                    }
+                }
             )
         }
-        composable<Search> { backStackEntry ->
-            val search: Search = backStackEntry.toRoute()
-            val searchScreenViewModel: SearchScreenViewModel = hiltViewModel()
-            SearchScreen(
-                onExplore = {
-                    navController.navigate(Main) {
-                        popUpTo(Main) {
-                            inclusive = true
-                        }
-                    }
-                },
+        composable<SearchCharacter> {
+            val searchCharacterScreenViewModel: SearchCharacterScreenViewModel = hiltViewModel()
+            SearchCharacterScreen(
+                onExplore = { navigateToMain(navController) },
                 onSaved = { /* todo: navigate to SavedScreen */ },
-                searchScreenViewModel = searchScreenViewModel,
-                key = search.key
+                viewModel = searchCharacterScreenViewModel
             )
+        }
+        composable<SearchArtifacts> {
+            val viewModel: SearchArtifactScreenViewModel = hiltViewModel()
+            SearchArtifactScreen(
+                onExplore = { navigateToMain(navController) },
+                onSaved = { /* todo: navigate to SavedScreen */ },
+                viewModel = viewModel
+            )
+        }
+    }
+}
+
+fun navigateToMain(navController: NavController) {
+    navController.navigate(Main) {
+        popUpTo(Main) {
+            inclusive = true
         }
     }
 }

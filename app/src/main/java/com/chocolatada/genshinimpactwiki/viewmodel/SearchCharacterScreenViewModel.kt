@@ -1,16 +1,15 @@
 package com.chocolatada.genshinimpactwiki.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.chocolatada.genshinimpactwiki.data.model.character.CharacterModel
 import com.chocolatada.genshinimpactwiki.data.repository.character.ICharacterRepository
 import com.chocolatada.genshinimpactwiki.domain.dto.CharacterSearchScreenDTO
-import com.chocolatada.genshinimpactwiki.domain.utilities.Character
+import com.chocolatada.genshinimpactwiki.domain.utilities.CharacterUtilities
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchScreenViewModel @Inject constructor(
+class SearchCharacterScreenViewModel @Inject constructor(
     private val characterRepository: ICharacterRepository
 ): ViewModel() {
     private val _loaded = MutableStateFlow(false)
@@ -23,7 +22,7 @@ class SearchScreenViewModel @Inject constructor(
             if(character.name.equals("traveler", true)) {
                 character.name = "${character.name} - ${character.vision}"
             }
-            Character.toCharacterSearchScreenDTO(
+            CharacterUtilities.toCharacterSearchScreenDTO(
                 character
             )
         }
