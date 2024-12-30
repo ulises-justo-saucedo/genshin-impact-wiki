@@ -6,12 +6,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.chocolatada.genshinimpactwiki.domain.dto.ArtifactSearchScreenDTO
 import com.chocolatada.genshinimpactwiki.domain.dto.CharacterSearchScreenDTO
+import com.chocolatada.genshinimpactwiki.navigation.CharacterDetail
 
 @Composable
 fun MyItemsList(
-    array: List<*>
+    array: List<*>,
+    onItemDetail: (String) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -21,7 +24,10 @@ fun MyItemsList(
         items(array.size) { iterator ->
             when(array[iterator]) {
                 is CharacterSearchScreenDTO -> {
-                    ShowCharacter(array[iterator] as CharacterSearchScreenDTO)
+                    ShowCharacter(
+                        character = array[iterator] as CharacterSearchScreenDTO,
+                        onItemDetail = onItemDetail
+                    )
                 }
                 is ArtifactSearchScreenDTO -> {
                     ShowArtifact(array[iterator] as ArtifactSearchScreenDTO)
@@ -32,12 +38,14 @@ fun MyItemsList(
 }
 
 @Composable
-fun ShowCharacter(character: CharacterSearchScreenDTO) {
+fun ShowCharacter(
+    character: CharacterSearchScreenDTO,
+    onItemDetail: (String) -> Unit
+) {
     MyCard(
         iconUrl = character.iconUrl,
         text = character.name,
-        lambdaParameter = "",
-        onClick = {  }
+        onClick = { onItemDetail(character.id) }
     )
 }
 
@@ -46,7 +54,6 @@ fun ShowArtifact(artifact: ArtifactSearchScreenDTO) {
     MyCard(
         iconUrl = artifact.urlIcon,
         text = artifact.name,
-        lambdaParameter = "",
         onClick = {  }
     )
 }

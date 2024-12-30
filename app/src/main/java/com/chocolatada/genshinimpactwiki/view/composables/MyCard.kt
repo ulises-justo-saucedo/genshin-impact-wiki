@@ -1,6 +1,5 @@
 package com.chocolatada.genshinimpactwiki.view.composables
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -35,12 +34,11 @@ fun MyCard(
     icon: Int? = null,
     iconUrl: String? = null,
     text: String,
-    lambdaParameter: String,
-    onClick: (String) -> Unit
+    onClick: () -> Unit
 ) {
     var coilLoadedImage by remember { mutableStateOf(false) }
     Card(
-        onClick = { onClick(lambdaParameter) },
+        onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)

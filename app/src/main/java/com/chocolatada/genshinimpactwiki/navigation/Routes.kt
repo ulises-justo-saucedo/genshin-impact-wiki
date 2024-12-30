@@ -9,4 +9,7 @@ object Main
 object SearchCharacter
 
 @Serializable
+data class CharacterDetail(val id: String)
+
+@Serializable
 object SearchArtifacts
