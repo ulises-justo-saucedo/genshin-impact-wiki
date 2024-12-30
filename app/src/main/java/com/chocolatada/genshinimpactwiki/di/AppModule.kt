@@ -1,8 +1,5 @@
 package com.chocolatada.genshinimpactwiki.di
 
-import com.chocolatada.genshinimpactwiki.data.dao.CharacterDao
-import com.chocolatada.genshinimpactwiki.data.repository.character.CharacterRepositoryImpl
-import com.chocolatada.genshinimpactwiki.data.repository.character.ICharacterRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,16 +22,4 @@ object AppModule {
             })
         }
     }
-
-    @Provides
-    @Singleton
-    fun provideCharacterRepository(
-        characterApiDao: CharacterDao
-    ): ICharacterRepository = CharacterRepositoryImpl(characterApiDao)
-
-    @Provides
-    @Singleton
-    fun provideCharacterDao(httpClient: HttpClient): CharacterDao = CharacterDao(httpClient)
-
-
 }
