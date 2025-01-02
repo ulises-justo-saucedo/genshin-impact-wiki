@@ -7,8 +7,9 @@ class CharacterUtilities {
     companion object {
         fun toCharacterSearchScreenDTO(characterModel: CharacterModel): CharacterSearchScreenDTO =
             CharacterSearchScreenDTO(
+                characterModel.id,
                 characterModel.name,
-                characterModel.urlIcon ?: "Not found"
+                characterModel.images?.urlIcon ?: "Not found"
             )
     }
 }
