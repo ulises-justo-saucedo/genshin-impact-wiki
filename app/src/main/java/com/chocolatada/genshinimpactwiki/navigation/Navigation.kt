@@ -14,6 +14,7 @@ import com.chocolatada.genshinimpactwiki.view.detail.CharacterDetailScreen
 import com.chocolatada.genshinimpactwiki.view.main.MainScreen
 import com.chocolatada.genshinimpactwiki.view.search.SearchArtifactScreen
 import com.chocolatada.genshinimpactwiki.view.search.SearchCharacterScreen
+import com.chocolatada.genshinimpactwiki.viewmodel.CharacterDetailScreenViewModel
 import com.chocolatada.genshinimpactwiki.viewmodel.MainViewModel
 import com.chocolatada.genshinimpactwiki.viewmodel.SearchArtifactScreenViewModel
 import com.chocolatada.genshinimpactwiki.viewmodel.SearchCharacterScreenViewModel
@@ -53,10 +54,12 @@ fun Navigation() {
         }
         composable<CharacterDetail> { backStackEntry ->
             val characterDetail: CharacterDetail = backStackEntry.toRoute()
+            val viewModel: CharacterDetailScreenViewModel = hiltViewModel()
             CharacterDetailScreen(
                 onExplore = { navigateToMain(navController) },
                 onSaved = { /* todo: navigate to SavedScreen */ },
-                id = characterDetail.id
+                id = characterDetail.id,
+                viewModel = viewModel
             )
         }
         composable<SearchArtifacts> {

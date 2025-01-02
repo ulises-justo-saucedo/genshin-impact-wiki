@@ -4,4 +4,5 @@ import com.chocolatada.genshinimpactwiki.data.model.character.CharacterModel
 
 interface ICharacterRepository {
     suspend fun getAll(): List<CharacterModel>
+    suspend fun getById(id: String): CharacterModel
 }

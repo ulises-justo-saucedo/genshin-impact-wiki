@@ -23,7 +23,7 @@ fun SearchArtifactScreen(
         onSaved = { onSaved() }
     ) {
         when(loaded.value) {
-            true -> MyItemsList(array = viewModel.artifacts)
+            true -> MyItemsList(array = viewModel.artifacts, {})
             false -> MyLoadingScreen(loaded = loaded.value)
         }
     }

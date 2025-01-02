@@ -63,7 +63,6 @@ fun MainScreen(
                 MyCard(
                     icon = currentObject.icon,
                     text = currentObject.key.replaceFirstChar { it.uppercase() },
-                    lambdaParameter = currentObject.key,
                     onClick = { onSearch(currentObject.key) }
                 )
             }
