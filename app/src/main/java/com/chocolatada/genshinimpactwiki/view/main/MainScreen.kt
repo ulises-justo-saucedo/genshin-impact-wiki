@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
@@ -35,35 +36,30 @@ import com.chocolatada.genshinimpactwiki.viewmodel.MainViewModel
 @Composable
 @Preview(showBackground = true)
 fun MainScreenPreview() {
-    MainScreen(mainViewModel = MainViewModel(), {}, {}, {})
+    MainScreen(mainViewModel = MainViewModel(), onExplore = {}, onSaved = {}, onSearch = {})
 }
 
 @Composable
 fun MainScreen(
+    modifier: Modifier = Modifier,
     mainViewModel: MainViewModel,
     onExplore: () -> Unit,
     onSaved: () -> Unit,
     onSearch: (String) -> Unit
 ) {
-    val scrollState = rememberScrollState()
     AppContainer(
         onExplore = { onExplore() },
         onSaved = { onSaved() },
         headerContent = { HeaderContent() }
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(start = 15.dp, end = 15.dp)
-                .fillMaxWidth()
-                .height(150.dp)
-                .verticalScroll(scrollState)
+    ) { modifier ->
+        LazyColumn(
+            modifier = modifier
         ) {
-            for(i in 0..<mainViewModel.keysList.size) {
-                val currentObject = mainViewModel.keysList[i]
+            items(items = mainViewModel.keysList) { item ->
                 MyCard(
-                    icon = currentObject.icon,
-                    text = currentObject.key.replaceFirstChar { it.uppercase() },
-                    onClick = { onSearch(currentObject.key) }
+                    icon = item.icon,
+                    text = item.key.replaceFirstChar { it.uppercase() },
+                    onClick = { onSearch(item.key) }
                 )
             }
         }

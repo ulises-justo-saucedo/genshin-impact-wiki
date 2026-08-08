@@ -21,9 +21,9 @@ fun SearchArtifactScreen(
     AppContainer(
         onExplore = { onExplore() },
         onSaved = { onSaved() }
-    ) {
+    ) { modifier ->
         when(loaded.value) {
-            true -> MyItemsList(array = viewModel.artifacts, {})
+            true -> MyItemsList(modifier = modifier, array = viewModel.artifacts, onItemDetail = {})
             false -> MyLoadingScreen(loaded = loaded.value)
         }
     }

@@ -55,10 +55,11 @@ fun CharacterDetailScreen(
     AppContainer(
         onExplore = { onExplore() },
         onSaved = { onSaved() }
-    ) {
+    ) { modifier ->
         when (loadedCharacter.value) {
             true -> {
                 ShowThisCharacter(
+                    modifier = modifier,
                     character = viewModel.character,
                     onErrorImage = {
                         imagesDownloadFailed = true
@@ -77,6 +78,7 @@ fun CharacterDetailScreen(
 
 @Composable
 fun ShowThisCharacter(
+    modifier: Modifier = Modifier,
     character: CharacterModel,
     onErrorImage: () -> Unit,
     onSuccessImage: () -> Unit,
@@ -85,9 +87,8 @@ fun ShowThisCharacter(
 ) {
     val scrollState = rememberScrollState()
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .height(500.dp)
             .verticalScroll(scrollState)
             .padding(start = 15.dp, end = 15.dp),
         horizontalAlignment = Alignment.CenterHorizontally,

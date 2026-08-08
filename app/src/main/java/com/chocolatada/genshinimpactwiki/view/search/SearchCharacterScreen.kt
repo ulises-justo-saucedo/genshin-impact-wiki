@@ -23,9 +23,10 @@ fun SearchCharacterScreen(
     AppContainer(
         onExplore = { onExplore() },
         onSaved = { onSaved() }
-    ) {
+    ) { modifier ->
         when(loaded.value) {
             true -> MyItemsList(
+                modifier = modifier,
                 array = viewModel.characters,
                 onItemDetail = onItemDetail
             )

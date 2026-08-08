@@ -23,7 +23,7 @@ fun AppContainer(
     onExplore: () -> Unit,
     onSaved: () -> Unit,
     headerContent: @Composable () -> Unit = {},
-    mainContent: @Composable () -> Unit
+    mainContent: @Composable (modifier: Modifier) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -48,7 +48,12 @@ fun AppContainer(
             headerContent()
         }
 
-        mainContent()
+        mainContent(
+            Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .padding(start = 15.dp, end = 15.dp)
+        )
 
         BottomBar(
             onExplore = { onExplore() },

@@ -13,13 +13,13 @@ import com.chocolatada.genshinimpactwiki.navigation.CharacterDetail
 
 @Composable
 fun MyItemsList(
+    modifier: Modifier = Modifier,
     array: List<*>,
     onItemDetail: (String) -> Unit
 ) {
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .height(500.dp)
     ) {
         items(array.size) { iterator ->
             when(array[iterator]) {
